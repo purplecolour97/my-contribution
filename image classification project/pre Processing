@@ -1,0 +1,24 @@
+# Importing the ImageDataGenerator for pre-processing
+from keras.preprocessing.image import ImageDataGenerator
+
+# Initialising the generators for train and test data
+# The rescale parameter ensures the input range in [0, 1]
+train_datagen = ImageDataGenerator(rescale = 1./255)
+test_datagen = ImageDataGenerator(rescale = 1./255)
+
+# Creating the generators with each batch of size = 20 images
+# The train_dir is the path to train folder which contains input classes
+# Here it is 'cat' and 'dog' so class_mode is binary
+
+train_generator = train_datagen.flow_from_directory(
+				train_dir,
+				target_size =(150, 150), # target_size = input image size
+				batch_size = 20,
+				class_mode ='binary')
+
+
+test_generator = test_datagen.flow_from_directory(
+					test_dir,
+					target_size =(150, 150),
+					batch_size = 20,
+					class_mode ='binary')
