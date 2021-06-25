@@ -1,0 +1,18 @@
+from sklearn.decomposition import PCA
+pca = PCA(n_components=400, random_state=0, svd_solver='randomized')
+pca.fit(dd)
+plt.plot(np.cumsum(pca.explained_variance_ratio_))
+plt.ylim(0.8, 1.0)
+plt.grid()
+DD = np.dot(dd - pca.mean_, pca.components_.T)
+def reconstruct(pca, vec):
+    return pca.mean_ + np.dot(vec, pca.components_)
+
+def vtoimg(v):
+     return np.array(np.clip(v, 0, 255), dtype=np.uint8).reshape(3,32,32).transpose([1,2,0])
+    
+reconstructed_cat = vtoimg(reconstruct(pca, DD[3000]))
+plt.subplot(1,2,1)
+plt.imshow(red_cat_bag)
+plt.subplot(1,2,2)
+plt.imshow(reconstructed_cat)
