@@ -1,0 +1,16 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+%matplotlib inline
+# Here we are using inbuilt dataset of scikit learn
+from sklearn.datasets import load_breast_cancer
+
+# instantiating
+cancer = load_breast_cancer()
+
+# creating dataframe
+df = pd.DataFrame(cancer['data'], columns = cancer['feature_names'])
+
+# checking head of dataframe
+df.head()
