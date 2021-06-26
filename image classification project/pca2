@@ -1,0 +1,18 @@
+# Importing standardscalar module
+from sklearn.preprocessing import StandardScaler
+
+scalar = StandardScaler()
+
+# fitting
+scalar.fit(df)
+scaled_data = scalar.transform(df)
+
+# Importing PCA
+from sklearn.decomposition import PCA
+
+# Let's say, components = 2
+pca = PCA(n_components = 2)
+pca.fit(scaled_data)
+x_pca = pca.transform(scaled_data)
+
+x_pca.shape
