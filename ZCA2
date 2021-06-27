@@ -1,0 +1,17 @@
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline   
+plt.rcParams['image.cmap'] = 'gray'
+
+def unpickle(file):
+    import pickle
+    with open(file, 'rb') as fo:
+        dict = pickle.load(fo, encoding='bytes')
+    return dict
+    batch1 = unpickle("../input/data_batch_1")
+batch2 = unpickle("../input/data_batch_2")
+# dd = batch[b'data']
+dd = np.vstack(tuple(unpickle("../input/data_batch_{}".format(n))[b'data'] for n in range(1,6)))
+
+red_cat_bag = dd[3000].reshape(3,32,32).transpose([1,2,0])
+plt.imshow(red_cat_bag)
