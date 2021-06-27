@@ -1,0 +1,18 @@
+import numpy as np
+from scipy import misc
+# Load the image
+img = misc.imread('morocco_noised.jpg', flatten=True)
+# Calculate U (u), Σ (s) and V (vh)
+u, s, vh = np.linalg.svd(img, full_matrices=False)
+# Remove sigma values below threshold (250)
+s_cleaned = np.array([si if si > 250 else 0 for si in s])
+# Calculate A' = U * Σ (cleaned) * V
+img_denoised = np.array(np.dot(u * s_cleaned, vh), dtype=int)
+# Save the new image
+misc.imsave('morocco_denoised.jpg', img_denoised)
+>>> u.shape
+(667, 667)
+>>> vh.shape
+(667, 1000)
+>>> s.shape
+(667,)
