@@ -1,0 +1,26 @@
+batch_size = 16
+nb_classes =4
+nb_epochs = 5
+img_rows, img_columns = 200, 200
+img_channel = 3
+nb_filters = 32
+nb_pool = 2
+nb_conv = 3
+model = tf.keras.Sequential([
+    tf.keras.layers.Conv2D(32, (3,3), padding='same', activation=tf.nn.relu,
+                           input_shape=(200, 200, 3)),
+    tf.keras.layers.MaxPooling2D((2, 2), strides=2),
+    tf.keras.layers.Conv2D(32, (3,3), padding='same', activation=tf.nn.relu),
+    tf.keras.layers.MaxPooling2D((2, 2), strides=2),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation=tf.nn.relu),
+    tf.keras.layers.Dense(4,  activation=tf.nn.softmax)
+])
+model.compile(optimizer='adam',loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+model.fit(X_train, y_train, batch_size = batch_size, epochs = nb_epochs, verbose = 1, validation_data = (X_test, y_test))
+Step 9: Accuracy and Score of model
+score = model.evaluate(X_test, y_test, verbose = 0 )
+print("Test Score: ", score[0])
+print("Test accuracy: ", score[1])
+ 
