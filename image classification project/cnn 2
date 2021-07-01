@@ -1,0 +1,26 @@
+path_test = "/content/drive/My Drive/semester 5 - ai ml/datasetHomeAssign/TRAIN"
+CATEGORIES = ["EOSINOPHIL", "LYMPHOCYTE", "MONOCYTE", "NEUTROPHIL"]
+print(img_array.shape)IMG_SIZE =200
+new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
+training = []def createTrainingData():
+  for category in CATEGORIES:
+    path = os.path.join(path_test, category)
+    class_num = CATEGORIES.index(category)
+    for img in os.listdir(path):
+      img_array = cv2.imread(os.path.join(path,img))
+      new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
+      training.append([new_array, class_num])createTrainingData()
+      random.shuffle(training)
+      
+     X =[]
+y =[]for features, label in training:
+  X.append(features)
+  y.append(label)
+X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 3) X = X.astype('float32')
+X /= 255
+from keras.utils import np_utils
+Y = np_utils.to_categorical(y, 4)
+print(Y[100])
+print(shape(Y))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 4)
