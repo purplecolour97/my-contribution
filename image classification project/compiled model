@@ -1,0 +1,10 @@
+# Your compiled model being trained with fit_generator
+history = model.fit_generator(
+			train_generator,
+			steps_per_epoch = 100,
+			epochs = 30,
+			validation_data = test_generator,
+			validation_steps = 50)
+
+# Note: here the validation steps are necessary because
+# the test_genrator also yield batches indefinitely in loops
