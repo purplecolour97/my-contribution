@@ -1,0 +1,25 @@
+model = Sequential()
+model.add(Conv2D(16,(5,5),padding='valid',input_shape = X_train.shape[1:]))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2,2),strides=2,padding = 'valid'))
+model.add(Dropout(0.4))
+model.add(Conv2D(32,(5,5),padding='valid'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2,2),strides=2,padding = 'valid'))
+model.add(Dropout(0.6))
+model.add(Conv2D(64,(5,5),padding='valid'))
+model.add(Activation('relu'))
+model.add(Dropout(0.8))
+model.add(Flatten())
+model.add(Dense(2))
+model.add(Activation('softmax'))
+
+batch_size = 100
+epochs= 100
+
+optimizer = keras.optimizers.rmsprop(lr = 0.0001, decay = 1e-6)
+
+model.compile(loss = 'binary_crossentropy',optimizer = optimizer, metrics = ['accuracy',keras_metrics.precision(), keras_metrics.recall()])
+
+history = model.fit(X_train,y_train,steps_per_epoch = int(len(X_train)/batch_size),epochs=epochs)
+history
