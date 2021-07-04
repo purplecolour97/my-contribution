@@ -1,0 +1,12 @@
+model_ann = Sequential()
+model_ann.add(Dense(16, input_shape=X_train.shape[1:], activation='relu'))
+model_ann.add(Dropout(0.4))
+model_ann.add(Dense(32, activation='relu'))
+model_ann.add(Dropout(0.6))
+model_ann.add(Flatten())
+model_ann.add(Dense(2, activation='softmax'))
+
+model_ann.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+history = model_ann.fit(X_train, y_train,epochs=100,batch_size=100)
+history
