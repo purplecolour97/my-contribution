@@ -1,0 +1,51 @@
+# importing libraries
+from pathlib import Path
+import glob
+import pandas as pd
+
+# reading images from path
+images_dir = Path('img')
+images = images_dir.glob("*.tif")
+
+train_data = []
+
+counter = 0
+for img in images:
+  counter += 1
+  if counter <= 130:
+    train_data.append((img,1))
+  else:
+    train_data.append((img,0))
+ 
+# converting data into pandas dataframe for easy visualization 
+train_data = pd.DataFrame(train_data,columns=['image','label'],index = None)
+img = cv2.resize(img, (229,229))
+import cv2
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# horizontal flip
+img = cv2.flip(img, 0) 
+
+# vertical flip
+img = cv2.flip(img,1)
+from scipy import ndimage
+img = ndimage.gaussian_filter(img, sigma= 5.11)
+# histogram equalization function
+def hist(img):
+  img_to_yuv = cv2.cvtColor(img,cv2.COLOR_BGR2YUV)
+  img_to_yuv[:,:,0] = cv2.equalizeHist(img_to_yuv[:,:,0])
+  hist_equalization_result = cv2.cvtColor(img_to_yuv, cv2.COLOR_YUV2BGR)
+  return hist_equalization_result
+  import random
+# function for rotation
+def rotation(img):
+  rows,cols = img.shape[0],img.shape[1]
+  randDeg = random.randint(-180, 180)
+  matrix = cv2.getRotationMatrix2D((cols/2, rows/2), randDeg, 0.70)
+  rotated = cv2.warpAffine(img, matrix, (rows, cols), borderMode=cv2.BORDER_CONSTANT,borderValue=(144, 159, 162))
+  return rotated     
+img = cv2.warpAffine(img, np.float32([[1, 0, 84], [0, 1, 56]]), (img.shape[0], img.shape[1]),
+borderMode=cv2.BORDER_CONSTANT,borderValue=(144, 159, 162))
+
+
+
+
